@@ -324,10 +324,10 @@ async function sendMinedBoc(
 ) {
   const wall = liteClient.open(wallet);
 
-  const now = BigInt(Math.floor(Date.now() / 1000));
+  const now = BigInt(Math.floor(Date.now() / 1000)) << BigInt(33);
   for (let i = 0; i < 10; i++) {
     wall.sendTransfer({
-      queryId: now + BigInt(i),
+      queryId: now,
       messages: [
         [
           internal({
