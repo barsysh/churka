@@ -246,7 +246,7 @@ async function main() {
   );
   const keyPair = await mnemonicToWalletKey(mySeed.split(" "));
 
-  const wallet = new HighloadWalletV2(keyPair.publicKey, 0, 0);
+  const wallet = new HighloadWalletV2(keyPair.publicKey, 0, 1);
 
   console.log(
     "Using highload wallet",

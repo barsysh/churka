@@ -178,7 +178,7 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         liteClient = yield (0, client_1.getLiteClient)("https://gist.githubusercontent.com/andreypfau/78bf1b50ccf7b8c66f87a97ab167eb27/raw/8bc97bd74b98c7c9c05791c953b94a5e77a3fdab/config.json");
         const keyPair = yield (0, crypto_1.mnemonicToWalletKey)(mySeed.split(" "));
-        const wallet = new highload_wallet_1.HighloadWalletV2(keyPair.publicKey, 0, 0);
+        const wallet = new highload_wallet_1.HighloadWalletV2(keyPair.publicKey, 0, 1);
         console.log("Using highload wallet", wallet.address.toString({ bounceable: false, urlSafe: true }));
         yield updateBestGivers(liteClient, wallet.address);
         setInterval(() => {
