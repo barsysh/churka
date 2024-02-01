@@ -175,14 +175,14 @@ function main() {
         else {
             if (args['--api'] === 'lite') {
                 console.log('Using LiteServer API');
-                liteClient = yield (0, client_1.getLiteClient)('https://gist.githubusercontent.com/andreypfau/78bf1b50ccf7b8c66f87a97ab167eb27/raw/8bc97bd74b98c7c9c05791c953b94a5e77a3fdab/config.json');
+                liteClient = yield (0, client_1.getLiteClient)('https://ton.org/global-config.json');
             }
             else {
                 console.log('Using TonHub API');
                 liteClient = yield (0, client_1.getTon4Client)();
             }
         }
-        const liteServerClient = yield (0, client_1.getLiteClient)('https://gist.githubusercontent.com/andreypfau/78bf1b50ccf7b8c66f87a97ab167eb27/raw/8bc97bd74b98c7c9c05791c953b94a5e77a3fdab/config.json');
+        const liteServerClient = yield (0, client_1.getLiteClient)('https://ton.org/global-config.json');
         const ton4Client = yield (0, client_1.getTon4Client)();
         const tonOrbsClient = yield (0, client_1.getTon4ClientOrbs)();
         const keyPair = yield (0, crypto_1.mnemonicToWalletKey)(mySeed.split(' '));

@@ -186,7 +186,7 @@ async function main() {
     } else {
         if (args['--api'] === 'lite') {
             console.log('Using LiteServer API')
-            liteClient = await getLiteClient('https://gist.githubusercontent.com/andreypfau/78bf1b50ccf7b8c66f87a97ab167eb27/raw/8bc97bd74b98c7c9c05791c953b94a5e77a3fdab/config.json')
+            liteClient = await getLiteClient('https://ton.org/global-config.json')
         } else {
             console.log('Using TonHub API')
             liteClient = await getTon4Client()
@@ -194,7 +194,7 @@ async function main() {
 
     }
 
-    const liteServerClient = await getLiteClient('https://gist.githubusercontent.com/andreypfau/78bf1b50ccf7b8c66f87a97ab167eb27/raw/8bc97bd74b98c7c9c05791c953b94a5e77a3fdab/config.json')
+    const liteServerClient = await getLiteClient('https://ton.org/global-config.json')
     const ton4Client = await getTon4Client()
     const tonOrbsClient = await getTon4ClientOrbs()
 

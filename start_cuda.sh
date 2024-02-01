@@ -11,7 +11,7 @@ fi
 while true; do
   for i in $(seq 0 $(($1 - 1)))
   do
-    node send_highload.js --api lite --bin ./pow-miner-cuda --gpu $i --givers 10000 &
+    node send_universal.js --api tonhub --bin ./pow-miner-cuda --gpu $i --givers 1000 &
   done
   sleep 1
   wait
