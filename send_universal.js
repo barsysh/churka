@@ -221,7 +221,7 @@ function main() {
                 //
             }
             if (!mined) {
-                console.log(`${( new Date() ).toTimeString()}: not mined`, seed, i++);
+                console.log(`${new Date()}: not mined`, seed, i++);
             }
             if (mined) {
                 const [newSeed] = yield getPowInfo(liteClient, core_1.Address.parse(giverAddress));
@@ -229,13 +229,15 @@ function main() {
                     console.log('Mined already too late seed');
                     continue;
                 }
-                console.log(`${( new Date() ).toTimeString()}:     mined`, seed, i++);
+                console.log(`${new Date()}:     mined`, seed, i++);
                 let w = opened;
                 let seqno = 0;
                 try {
                     seqno = yield CallForSuccess(() => w.getSeqno());
                 }
-                catch (e) { }
+                catch (e) {
+                    //
+                }
                 sendMinedBoc(wallet, seqno, keyPair, giverAddress, core_1.Cell.fromBoc(mined)[0].asSlice().loadRef());
                 // for (let j = 0; j < 5; j++) {
                 //     try {

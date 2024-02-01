@@ -11,7 +11,7 @@ fi
 while true; do
   for i in $(seq 0 $(($1 - 1)))
   do
-    node send_universal.js --api lite --bin ./pow-miner-opencl --gpu $i &
+    node send_highload.js --api lite --bin ./pow-miner-opencl --gpu $i &
   done
   sleep 1
   wait

@@ -85,7 +85,7 @@ let i = 0;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const keyPair = yield (0, crypto_1.mnemonicToWalletKey)(mySeed.split(' '));
-        const liteClient = yield getLiteClient('https://ton-blockchain.github.io/global.config.json');
+        const liteClient = yield getLiteClient('https://gist.githubusercontent.com/andreypfau/78bf1b50ccf7b8c66f87a97ab167eb27/raw/8bc97bd74b98c7c9c05791c953b94a5e77a3fdab/config.json');
         const wallet = new highload_wallet_1.HighloadWalletV2(keyPair.publicKey);
         const opened = liteClient.open(wallet);
         console.log('Got wallet', wallet.address.toString({ urlSafe: true, bounceable: false }));
@@ -108,7 +108,7 @@ function main() {
             const iterations = reader.readBigNumber();
             const randomName = (yield (0, crypto_1.getSecureRandomBytes)(8)).toString('hex') + '.boc';
             const path = `bocs/${randomName}`;
-            const command = `.\\pow-miner-cuda.exe -g 0 -F 128 -t 5 ${wallet.address.toString({ urlSafe: true, bounceable: true })} ${seed} ${complexity} ${iterations} ${bestGiver.address} ${path}`;
+            const command = `./pow-miner-cuda -g 0 -F 128 -t 5 ${wallet.address.toString({ urlSafe: true, bounceable: true })} ${seed} ${complexity} ${iterations} ${bestGiver.address} ${path}`;
             try {
                 const output = (0, child_process_1.execSync)(command, { encoding: 'utf-8', stdio: "pipe" }); // the default is 'buffer'
             }
