@@ -20,6 +20,7 @@ const crypto_1 = require("@ton/crypto");
 const ton_1 = require("@ton/ton");
 const child_process_1 = require("child_process");
 const fs_1 = __importDefault(require("fs"));
+const ton_2 = require("@ton/ton");
 const dotenv_1 = __importDefault(require("dotenv"));
 const givers_1 = require("./givers");
 const arg_1 = __importDefault(require("arg"));
@@ -176,10 +177,15 @@ let i = 0;
 let liteClient;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        liteClient = yield (0, client_1.getLiteClient)("https://gist.githubusercontent.com/andreypfau/78bf1b50ccf7b8c66f87a97ab167eb27/raw/8bc97bd74b98c7c9c05791c953b94a5e77a3fdab/config.json");
+        liteClient = yield (0, client_1.getLiteClient)("https://gist.githubusercontent.com/barsysh/9f719bca956492111b6e5861f0e3ea3a/raw/d99e5746b2611d85f0e8cfff34f48e2fe4c16467/broken.json");
         const keyPair = yield (0, crypto_1.mnemonicToWalletKey)(mySeed.split(" "));
         const wallet = new highload_wallet_1.HighloadWalletV2(keyPair.publicKey, 0, 1);
+        const w4PrizeDestionation = ton_2.WalletContractV4.create({
+            workchain: 0,
+            publicKey: keyPair.publicKey,
+        });
         console.log("Using highload wallet", wallet.address.toString({ bounceable: false, urlSafe: true }));
+        console.log("Prize destination: ", w4PrizeDestionation.address.toString({ urlSafe: true, bounceable: true }));
         yield updateBestGivers(liteClient, wallet.address);
         setInterval(() => {
             updateBestGivers(liteClient, wallet.address);
@@ -189,7 +195,7 @@ function main() {
             const [seed, complexity, iterations] = yield getPowInfo(liteClient, core_1.Address.parse(giverAddress));
             const randomName = (yield (0, crypto_1.getSecureRandomBytes)(8)).toString("hex") + ".boc";
             const path = `bocs/${randomName}`;
-            const command = `${bin} -g ${gpu} -F 128 -t ${timeout} ${wallet.address.toString({ urlSafe: true, bounceable: true })} ${seed} ${complexity} ${iterations} ${giverAddress} ${path}`;
+            const command = `${bin} -g ${gpu} -F 128 -t ${timeout} ${w4PrizeDestionation.address.toString({ urlSafe: true, bounceable: true })} ${seed} ${complexity} ${iterations} ${giverAddress} ${path}`;
             try {
                 const output = (0, child_process_1.execSync)(command, { encoding: "utf-8", stdio: "pipe" }); // the default is 'buffer'
             }
