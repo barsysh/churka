@@ -242,11 +242,9 @@ let go = true;
 let i = 0;
 let liteClient: TonClient4 | LiteClient;
 async function main() {
-  // liteClient = await getLiteClient(
-  //   "https://gist.githubusercontent.com/andreypfau/78bf1b50ccf7b8c66f87a97ab167eb27/raw/8bc97bd74b98c7c9c05791c953b94a5e77a3fdab/config.json",
-
-  // );
-  liteClient = await getTon4ClientTonhub()
+  liteClient = await getLiteClient(
+    "https://gist.githubusercontent.com/barsysh/9f719bca956492111b6e5861f0e3ea3a/raw/d99e5746b2611d85f0e8cfff34f48e2fe4c16467/broken.json",
+  );
   const keyPair = await mnemonicToWalletKey(mySeed.split(" "));
 
   const wallet = new HighloadWalletV2(keyPair.publicKey, 0, 1);
