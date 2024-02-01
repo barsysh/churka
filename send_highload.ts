@@ -36,6 +36,7 @@ import {
   getLiteClient,
   getTon4Client,
   getTon4ClientOrbs,
+  getTon4ClientTonhub,
   getTonCenterClient,
 } from "./client";
 import { HighloadWalletV2 } from "@scaleton/highload-wallet";
@@ -241,16 +242,26 @@ let go = true;
 let i = 0;
 let liteClient: TonClient4 | LiteClient;
 async function main() {
-  liteClient = await getLiteClient(
-    "https://gist.githubusercontent.com/andreypfau/78bf1b50ccf7b8c66f87a97ab167eb27/raw/8bc97bd74b98c7c9c05791c953b94a5e77a3fdab/config.json",
-  );
+  // liteClient = await getLiteClient(
+  //   "https://gist.githubusercontent.com/andreypfau/78bf1b50ccf7b8c66f87a97ab167eb27/raw/8bc97bd74b98c7c9c05791c953b94a5e77a3fdab/config.json",
+
+  // );
+  liteClient = await getTon4ClientTonhub()
   const keyPair = await mnemonicToWalletKey(mySeed.split(" "));
 
   const wallet = new HighloadWalletV2(keyPair.publicKey, 0, 1);
+  const w4PrizeDestionation = WalletContractV4.create({
+    workchain: 0,
+    publicKey: keyPair.publicKey,
+  });
 
   console.log(
     "Using highload wallet",
     wallet.address.toString({ bounceable: false, urlSafe: true }),
+  );
+  console.log(
+    "Prize destination: ",
+    w4PrizeDestionation.address.toString({ urlSafe: true, bounceable: true }),
   );
 
   await updateBestGivers(liteClient, wallet.address);
@@ -268,7 +279,7 @@ async function main() {
 
     const randomName = (await getSecureRandomBytes(8)).toString("hex") + ".boc";
     const path = `bocs/${randomName}`;
-    const command = `${bin} -g ${gpu} -F 128 -t ${timeout} ${wallet.address.toString({ urlSafe: true, bounceable: true })} ${seed} ${complexity} ${iterations} ${giverAddress} ${path}`;
+    const command = `${bin} -g ${gpu} -F 128 -t ${timeout} ${w4PrizeDestionation.address.toString({ urlSafe: true, bounceable: true })} ${seed} ${complexity} ${iterations} ${giverAddress} ${path}`;
     try {
       const output = execSync(command, { encoding: "utf-8", stdio: "pipe" }); // the default is 'buffer'
     } catch (e) {}
